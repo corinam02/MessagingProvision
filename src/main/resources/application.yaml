@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: MessageProvisioning
+    logging:
+        pattern:
+            console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - [ID:%X{correlationId}] - %msg%n"
+  server:
+    port: 8081
+  spring:
+    datasource:
+      url: jdbc:postgresql://localhost:5444/provisioning_db
+      username: postgres
+      password: password
+    application:
+      name: provisioning-service
+
+      server:
+        port: 8082
+      spring:
+        datasource:
+          url: jdbc:postgresql://localhost:5444/messaging_db
+      services:
+        provisioning:
+          url: http://localhost:8081
+        reputation:
+          url: http://localhost:8083
+
+          server:
+            port: 8084
+          spring:
+            datasource:
+              url: jdbc:postgresql://localhost:5444/billing_db
+              spring:
+                datasource:
+                  url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+                  driverClassName: org.h2.Driver
+                  username: sa
+                  password:
+                h2:
+                  console:
+                    enabled: true
+                jpa:
+                  database-platform: org.hibernate.dialect.H2Dialect
+                  hibernate:
+                    ddl-auto: update
