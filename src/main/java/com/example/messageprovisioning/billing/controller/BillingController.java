@@ -19,7 +19,6 @@ public class BillingController {
         this.billingService = billingService;
     }
 
-    // GET /api/v1/billing/uber/total
     @GetMapping("/{tenantId}/total")
     public ResponseEntity<String> getTotal(@PathVariable String tenantId) {
         BigDecimal total = billingService.getMonthlyTotal(tenantId);

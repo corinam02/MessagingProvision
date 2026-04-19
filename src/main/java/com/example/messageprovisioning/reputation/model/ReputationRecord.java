@@ -36,6 +36,9 @@ public class ReputationRecord {
 
     public ReputationRecord(@NotBlank(message = "phone number is required") String phoneNumber, @NotBlank(message = "reportedId is required") String reporterId, @NotBlank(message = "reportType is required") @Pattern(regexp = "SPAM|FRAUD|ROBOCALL|HARASSMENT",
     message = "accepted values: SPAM, FRAUD, ROBOCALL, HARRASMENT") String reportType) {
+        this.phoneNumber = phoneNumber;
+        this.reporterId = reporterId;
+        this.reportType = reportType;
     }
 
     public void setDisputed(boolean b) {

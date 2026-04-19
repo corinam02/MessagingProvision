@@ -31,13 +31,12 @@ public class BillingService {
 
     @Transactional
     public void recordCharge(BillingNotificationRequest notification) {
-        // Deduplicare: daca am mai procesat acest eveniment, il ignoram
-        // SQS garanteaza "cel putin o data" — deci pot veni duplicate
         if (billingRepository.existsByEventId(notification.getEventId())) {
-            log.warn("Eveniment billing duplicat ignorat: eventId={}",
+            log.warn("Ignored event: eventId={}",
                     notification.getEventId());
             return;
         }
+
         BillingRecord record = new BillingRecord();
         record.setEventId(notification.getEventId());
         record.setEventType(notification.getEventType().name());
@@ -51,7 +50,7 @@ public class BillingService {
 
         billingRepository.save(record);
 
-        log.info("Taxa inregistrata: tenant={}, tip={}, total={}",
+        log.info("Registered tax: tenant={}, tip={}, total={}",
                 notification.getTenantId(), notification.getEventType(),
                 notification.getTotalAmount());
     }

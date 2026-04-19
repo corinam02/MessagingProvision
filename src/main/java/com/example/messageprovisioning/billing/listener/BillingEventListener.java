@@ -44,7 +44,7 @@ public class BillingEventListener {
             billingService.recordCharge(notification);
 
         } catch (Exception e) {
-            log.error("Billign event failed. Body: {}", messageBody, e);
+            log.error("Billing event failed. Body: {}", messageBody, e);
             throw new RuntimeException("Billing event failed", e);
         } finally {
             MDC.remove("correlationId");

@@ -21,7 +21,7 @@ public class BillingEventPublisher {
     private final SqsClient sqsClient;
     private final ObjectMapper objectMapper;
 
-    @Value( "${aws.sqs.billing-queue-url}")
+    @Value("${aws.sqs.billing-queue-url:disabled}")
     private String billingQueueUrl;
 
     private static final BigDecimal SMS_PRICE = new BigDecimal("0.0075");

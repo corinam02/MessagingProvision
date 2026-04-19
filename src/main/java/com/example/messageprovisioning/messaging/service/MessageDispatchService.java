@@ -33,17 +33,16 @@ import java.util.stream.Collectors;
 
         @Transactional
         public MessageStatusResponse sendMessage(SendMessageRequest request) {
-            log.info("Cerere trimitere SMS: from={}, to={}, tenant={}",
+            log.info("SMS sent: from={}, to={}, tenant={}",
                     request.getFromNumber(), request.getToNumber(), request.getTenantId());
 
-            // Pasul 1: Salveaza mesajul cu status QUEUED
-            Message message = new Message();
-            message.setFromNumber(request.getFromNumber());
-            message.setToNumber(request.getToNumber());
-            message.setBody(request.getBody());
-            message.setTenantId(request.getTenantId());
-            message.setStatus(MessageStatus.QUEUED);
-            message = messageRepo.save(message);
+            Message auxmessage = new Message();
+            auxmessage.setFromNumber(request.getFromNumber());
+            auxmessage.setToNumber(request.getToNumber());
+            auxmessage.setBody(request.getBody());
+            auxmessage.setTenantId(request.getTenantId());
+            auxmessage.setStatus(MessageStatus.QUEUED);
+            Message message = messageRepo.save(auxmessage);
 
             boolean dispatched = dispatchToCarrier(message);
 

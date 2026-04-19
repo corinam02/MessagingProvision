@@ -19,5 +19,13 @@ public class ReputationScore {
 
 
     public ReputationScore(String phoneNumber, int score, ScoreLevel level, long totalReports, long recentReports) {
+
+    }
+
+    public ReputationScore(String phoneNumber, int score, ScoreLevel level, boolean safeToProvision) {
+        this.phoneNumber = phoneNumber;
+        this.score = score;
+        this.level = level;
+        this.safeToProvision = safeToProvision;
     }
 }
